@@ -1,4 +1,4 @@
-const mongodb = require('../data/database');
+const mongodb = require('../database');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {
@@ -21,12 +21,11 @@ const getSingle = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    //#swagger.tags=['users']
+    //#swagger.tags=['users'] 
     const user = {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password
-        
     };
     const response = await mongodb.getDatabase().db().collection('users').insertOne(user);
     if (response.acknowledged) {
@@ -44,7 +43,7 @@ const updateUser = async (req, res) => {
         email: req.body.email,
         password: req.body.password
     };
-    const response = await mongodb.getDatabase().db().collection('users').replaceOne({ _id: userID }, users);
+    const response = await mongodb.getDatabase().db().collection('users').replaceOne({ _id: userID }, user);
     if (response.modifiedCount > 0) {
         res.status(204).send();
     } else {
